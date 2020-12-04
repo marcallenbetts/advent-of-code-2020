@@ -11,10 +11,7 @@ const json = input.map((i) => {
     `{${i}}`
       .replace('\\n', ' ')
       .replace(/\s+/g, ', ')
-      .replace('{', '{"')
-      .replace(/\:/g, '":"')
-      .replace(/\,\s/g, '", "')
-      .replace('}', '"}')
+      .replace(/(\#?\w+)/g, '"$1"')
   )
 })
 
