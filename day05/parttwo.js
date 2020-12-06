@@ -32,7 +32,33 @@ const seatIds = input.map((boardingPass) => {
         : seat.slice(-(seat.length / 2))
   }
 
-  return row[0] * 8 + seat[0]
+  return {
+    row: row[0],
+    seat: seat[0],
+    seatId: row[0] * 8 + seat[0]
+  }
 })
 
-console.log(`Max seatId is ${Math.max(...seatIds)}`)
+let rowCounts = []
+for (i = 0; i < 127; i++) {
+  rowCounts.push({
+    row: i,
+    count: seatIds.filter((sid) => sid.row === i).length
+  })
+}
+
+const myRow = rowCounts.find((r) => r.count === 7).row
+
+let mySeat
+for (i = 0; i < 8; i++) {
+  if (
+    seatIds.filter((sid) => sid.row === myRow && sid.seat === i).length === 0
+  ) {
+    mySeat = i
+  }
+}
+seatIds.filter((sid) => sid.row === myRow)
+
+const mySeatId = myRow * 8 + mySeat
+
+console.log(`My seatId is ${mySeatId}`)
